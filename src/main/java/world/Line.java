@@ -1,15 +1,16 @@
 package world;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Line {
 
+    @EqualsAndHashCode.Include
     private Point p1;
+    @EqualsAndHashCode.Include
     private Point p2;
 
     public Point[] getLine() {

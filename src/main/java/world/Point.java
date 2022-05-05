@@ -1,17 +1,19 @@
 package world;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Point {
 
     //  == coordinates ==
+    @EqualsAndHashCode.Include
     private double x;
+    @EqualsAndHashCode.Include
     private double y;
+    @EqualsAndHashCode.Include
     private double z;
 
     public double[] getCoordinates() {
