@@ -23,23 +23,16 @@ public class DataReader {
 
     public static Set load(String path) throws IOException {
         HashSet<Line> objects = new HashSet<>();
-
-        JSONObject parser = new JSONObject(Files.readString(Path.of(path), StandardCharsets.UTF_8));
-
-        JSONArray figures = parser.getJSONArray("figure");
-
-        figures.forEach(f -> {
-            JSONArray lines = ((JSONObject) f).getJSONArray("lines");
-            lines.forEach(l -> {
-                JSONObject line = (JSONObject) l;
-
-                Point p1 = new Point(line.getDouble("x"), line.getDouble("y"), line.getDouble("z"));
-                Point p2 = new Point(line.getDouble("x"), line.getDouble("y"), line.getDouble("z"));
-
+        JSONArray parser = new JSONArray(Files.readString(Path.of(path), StandardCharsets.UTF_8));
+        parser.forEach(lines -> {
+            JSONArray line = (JSONArray) lines;
+            for(var l :line) {
+                JSONObject points = (JSONObject) ((JSONObject) l).get("line") ;
+                Point p1 = new Point(points.getDouble("x1"), points.getDouble("y1"), points.getDouble("z1"));
+                Point p2 = new Point(points.getDouble("x2"), points.getDouble("y2"), points.getDouble("z2"));
                 objects.add(new Line(p1, p2));
-            });
+            }
         });
-
         return objects;
     }
 
