@@ -1,6 +1,7 @@
 package world;
 
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 @AllArgsConstructor
 @Data
@@ -8,9 +9,9 @@ import lombok.*;
 @ToString
 public class Line {
 
-    @EqualsAndHashCode.Include
+    @EqualsAndHashCode.Include @NotNull
     private Point p1;
-    @EqualsAndHashCode.Include
+    @EqualsAndHashCode.Include @NotNull
     private Point p2;
 
     public Point[] getLine() {

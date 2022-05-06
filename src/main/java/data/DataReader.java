@@ -33,6 +33,7 @@ public class DataReader {
                 objects.add(new Line(p1, p2));
             }
         });
+        System.out.println("Size "+objects.size());
         return objects;
     }
 

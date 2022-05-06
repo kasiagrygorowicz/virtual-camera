@@ -9,7 +9,7 @@ public class Camera extends JPanel {
 //  == camera parameters ==
     private final int width = 12;
     private final int height =12;
-    private double zoom = 5;
+    private double zoom = 2;
 
     //  == world position ==
     private double positionAxisX = 0.0;
@@ -74,44 +74,37 @@ public class Camera extends JPanel {
 
 //  == transform coordinates of line ==
     private Line transform(Line line){
-//        new coordinates
-        double newX1, newY1, newZ1, newX2, newY2, newZ2;
+
 //        point 1
-        double x1 = line.getP1().getX();
-        double y1 = line.getP1().getY();
-        double z1 = line.getP1().getZ();
+        double x1 = line.getP1().getX() +positionAxisX;
+        double y1 = line.getP1().getY()+positionAxisY;
+        double z1 = line.getP1().getZ()+positionAxisZ;
 
 //        point 2
-        double x2 = line.getP2().getX();
-        double y2 = line.getP2().getY();
-        double z2 = line.getP2().getZ();
+        double x2 = line.getP2().getX()+positionAxisX;
+        double y2 = line.getP2().getY()+positionAxisY;
+        double z2 = line.getP2().getZ()+positionAxisZ;
 
 //        rotate x axis
         double radiusX = (rotationAxisX *Math.PI) /180;
-        newY1 =y1*Math.cos(radiusX) - z1*Math.sin(radiusX);
-        newZ1 = y1*Math.sin(radiusX) + z1*Math.cos(radiusX);
-        newY2 = y2*Math.cos(radiusX) - z2*Math.sin(radiusX);
-        newZ2 = y2*Math.cos(radiusX) + z2*Math.cos(radiusX);
-
-        y1 =newY1; z1 =newZ1; y2 =newY2; z2 = newZ2;
+        y1 =y1*Math.cos(radiusX) - z1*Math.sin(radiusX);
+        z1 = y1*Math.sin(radiusX) + z1*Math.cos(radiusX);
+        y2 = y2*Math.cos(radiusX) - z2*Math.sin(radiusX);
+        z2 = y2*Math.cos(radiusX) + z2*Math.cos(radiusX);
 
 //        rotate y axis
         double radiusY = (rotationAxisY *Math.PI) /180;
-        newX1 = z1*Math.sin(radiusY) + x1*Math.cos(radiusY);
-        newZ1 = z1*Math.cos(radiusY) - x1*Math.sin(radiusY);
-        newX2 = z2*Math.sin(radiusY) + x2*Math.cos(radiusY);
-        newZ2 = z2*Math.cos(radiusY) - x2*Math.sin(radiusY);
-
-        x1 = newX1; z1 =newZ1; x2 =newX2; z2 =newZ2;
+        x1 = z1*Math.sin(radiusY) + x1*Math.cos(radiusY);
+        z1 = z1*Math.cos(radiusY) - x1*Math.sin(radiusY);
+        x2 = z2*Math.sin(radiusY) + x2*Math.cos(radiusY);
+        z2 = z2*Math.cos(radiusY) - x2*Math.sin(radiusY);
 
 //        rotate z axis
         double radiusZ = (rotationAxisZ *Math.PI) /180;
-        newX1 = x1*Math.cos(radiusZ) - y1*Math.sin(radiusZ);
-        newY1 = x1*Math.sin(radiusZ) + y1*Math.cos(radiusZ);
-        newX2 = x2*Math.cos(radiusZ) - y2*Math.sin(radiusZ);
-        newY2 = x2*Math.sin(radiusZ) + y2*Math.cos(radiusZ);
-
-        x1 = newX1; y1 =newY1; x2 =newX2; y2 =newY2;
+        x1 = x1*Math.cos(radiusZ) - y1*Math.sin(radiusZ);
+        y1 = x1*Math.sin(radiusZ) + y1*Math.cos(radiusZ);
+        x2 = x2*Math.cos(radiusZ) - y2*Math.sin(radiusZ);
+        y2 = x2*Math.sin(radiusZ) + y2*Math.cos(radiusZ);
 
         return new Line(new Point(x1,y1,z1),new Point(x2,y2,z2));
     }
@@ -136,8 +129,8 @@ public class Camera extends JPanel {
 
                     x1 = transformed.getP1().getX()* zoom /(transformed.getP1().getZ()+ zoom);
                     y1 = -transformed.getP1().getY()* zoom /(transformed.getP1().getZ()+ zoom);
-                    x2 = transformed.getP2().getX()* zoom /(transformed.getP1().getZ()+ zoom);
-                    y2 = -transformed.getP2().getY()* zoom /(transformed.getP1().getZ()+ zoom);
+                    x2 = transformed.getP2().getX()* zoom /(transformed.getP2().getZ()+ zoom);
+                    y2 = -transformed.getP2().getY()* zoom /(transformed.getP2().getZ()+ zoom);
 
 //                  == scale ==
                     xScaled =getSize().width/width;
@@ -145,6 +138,7 @@ public class Camera extends JPanel {
 
                     xPositioned =getSize().width/2;
                     yPositioned =getSize().height/2;
+
 
                     g2D.setStroke(new BasicStroke(1));
                     g2D.setColor(new Color(204, 204, 204));

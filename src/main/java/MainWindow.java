@@ -84,10 +84,9 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
 
         }else if(e.getSource() == loadData){
             System.out.println("choosing file");
-            JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            JFileChooser fileChooser = new JFileChooser("/Users/Kasia/Documents/projects/virtual-camera/program/src/main/resources/json_files");
             int isSelected = fileChooser.showOpenDialog(this);
             if(isSelected == JFileChooser.APPROVE_OPTION){
-                System.out.println("file accepted");
                 try{
                     File file = fileChooser.getSelectedFile();
                     Set<Line> objects = DataReader.load(file.getPath());
@@ -115,6 +114,7 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
     public void keyPressed(KeyEvent e) {
        switch(e.getKeyCode()){
 //         move vertically and horizontally
+//           todo move z
            case KeyEvent.VK_UP -> camera.moveAxisY(CameraConstants.STEP);
            case KeyEvent.VK_DOWN -> camera.moveAxisY(-CameraConstants.STEP);
            case KeyEvent.VK_RIGHT -> camera.moveAxisX(CameraConstants.STEP);
@@ -125,9 +125,15 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
            case KeyEvent.VK_F -> camera.rotateAxisX(CameraConstants.TURN);
 //         == x rotation - backwards ==
            case KeyEvent.VK_G -> camera.rotateAxisX(-CameraConstants.TURN);
-//         ==
-
-       }
+//         == y rotation - right ==
+           case KeyEvent.VK_H -> camera.rotateAxisY(CameraConstants.TURN);
+//         == y rotation - left ==
+           case KeyEvent.VK_J -> camera.rotateAxisY(-CameraConstants.TURN);
+//         == z rotation- down&left ==
+           case KeyEvent.VK_K -> camera.rotateAxisZ(CameraConstants.TURN);
+//         == z rotation- down&right ==
+           case KeyEvent.VK_L -> camera.rotateAxisZ(-CameraConstants.TURN);
+    }
        camera.repaint();
     }
 
