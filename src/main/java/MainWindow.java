@@ -2,13 +2,19 @@ import data.DataReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import world.Camera;
+import world.CameraConstants;
+import world.Line;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.Set;
 
 public class MainWindow extends JFrame implements KeyListener, ActionListener {
 
@@ -22,7 +28,7 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
 
     public MainWindow() {
         super("Virtual camera");
-        setSize(1300, 800);
+        setSize(1280, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -72,13 +78,30 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == about){
-            log.info("in about");
             JOptionPane.showMessageDialog(this,"Virtual camera project","About",JOptionPane.INFORMATION_MESSAGE);
         }else if(e.getSource() == howToUse){
             JOptionPane.showMessageDialog(this ,"Instruction","How to use",JOptionPane.INFORMATION_MESSAGE);
 
         }else if(e.getSource() == loadData){
-//            todo choose data file
+            System.out.println("choosing file");
+            JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            int isSelected = fileChooser.showOpenDialog(this);
+            if(isSelected == JFileChooser.APPROVE_OPTION){
+                System.out.println("file accepted");
+                try{
+                    File file = fileChooser.getSelectedFile();
+                    Set<Line> objects = DataReader.load(file.getPath());
+                    camera.setObjects(objects);
+                    camera.repaint();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(
+                            new JFrame(),
+                            "Error reading a file. Check syntax!",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
         }
 
     }
@@ -90,7 +113,22 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+       switch(e.getKeyCode()){
+//         move vertically and horizontally
+           case KeyEvent.VK_UP -> camera.moveAxisY(CameraConstants.STEP);
+           case KeyEvent.VK_DOWN -> camera.moveAxisY(-CameraConstants.STEP);
+           case KeyEvent.VK_RIGHT -> camera.moveAxisX(CameraConstants.STEP);
+           case KeyEvent.VK_LEFT -> camera.moveAxisX(-CameraConstants.STEP);
+           case KeyEvent.VK_I -> camera.setZoom(CameraConstants.ZOOM);
+           case KeyEvent.VK_O -> camera.setZoom(-CameraConstants.ZOOM);
+//         == x rotation - forward ==
+           case KeyEvent.VK_F -> camera.rotateAxisX(CameraConstants.TURN);
+//         == x rotation - backwards ==
+           case KeyEvent.VK_G -> camera.rotateAxisX(-CameraConstants.TURN);
+//         ==
 
+       }
+       camera.repaint();
     }
 
     @Override
