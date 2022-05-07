@@ -81,38 +81,41 @@ public class Camera extends JPanel {
     //  == transform coordinates of line ==
     private Line transform(Line line) {
 
-//        point 1
-        double x1 = line.getP1().getX() + positionAxisX;
-        double y1 = line.getP1().getY() + positionAxisY;
-        double z1 = line.getP1().getZ() + positionAxisZ;
+//Get co-ordinates of ferst 3D point
+        double newX1 = line.getP1().getX() + positionAxisX;
+        double newY1 = line.getP1().getY() + positionAxisY;
+        double newZ1 = line.getP1().getZ() + positionAxisZ;
 
-//        point 2
-        double x2 = line.getP2().getX() + positionAxisX;
-        double y2 = line.getP2().getY() + positionAxisY;
-        double z2 = line.getP2().getZ() + positionAxisZ;
+        //get co-ordinates of second 3D point
+        double newX2 = line.getP2().getX() + positionAxisX;
+        double newY2 = line.getP2().getY() + positionAxisY;
+        double newZ2 = line.getP2().getZ() + positionAxisZ;
 
-//        rotate x axis
-        double radiusX = (rotationAxisX * Math.PI) / 180;
-        y1 = y1 * Math.cos(radiusX) - z1 * Math.sin(radiusX);
-        z1 = y1 * Math.sin(radiusX) + z1 * Math.cos(radiusX);
-        y2 = y2 * Math.cos(radiusX) - z2 * Math.sin(radiusX);
-        z2 = y2 * Math.cos(radiusX) + z2 * Math.cos(radiusX);
+        //X rotation
+        double xRadians = (rotationAxisX * Math.PI) / 180;
+        newY1 = newY1*Math.cos(xRadians) - newZ1*Math.sin(xRadians);
+        newZ1 = newY1*Math.sin(xRadians) + newZ1*Math.cos(xRadians);
+        newY2 = newY2*Math.cos(xRadians) - newZ2*Math.sin(xRadians);
+        newZ2 = newY2*Math.sin(xRadians) + newZ2*Math.cos(xRadians);
 
-//        rotate y axis
-        double radiusY = (rotationAxisY * Math.PI) / 180;
-        x1 = z1 * Math.sin(radiusY) + x1 * Math.cos(radiusY);
-        z1 = z1 * Math.cos(radiusY) - x1 * Math.sin(radiusY);
-        x2 = z2 * Math.sin(radiusY) + x2 * Math.cos(radiusY);
-        z2 = z2 * Math.cos(radiusY) - x2 * Math.sin(radiusY);
+        //Y rotation
+        double yRadians = (rotationAxisY * Math.PI) / 180;
+        newX1 = newZ1*Math.sin(yRadians) + newX1*Math.cos(yRadians);
+        newZ1 = newZ1*Math.cos(yRadians) - newX1*Math.sin(yRadians);
+        newX2 = newZ2*Math.sin(yRadians) + newX2*Math.cos(yRadians);
+        newZ2 = newZ2*Math.cos(yRadians) - newX2*Math.sin(yRadians);
 
-//        rotate z axis
-        double radiusZ = (rotationAxisZ * Math.PI) / 180;
-        x1 = x1 * Math.cos(radiusZ) - y1 * Math.sin(radiusZ);
-        y1 = x1 * Math.sin(radiusZ) + y1 * Math.cos(radiusZ);
-        x2 = x2 * Math.cos(radiusZ) - y2 * Math.sin(radiusZ);
-        y2 = x2 * Math.sin(radiusZ) + y2 * Math.cos(radiusZ);
+        //Z rotation
+        double zRadians = (rotationAxisZ * Math.PI) / 180;
+        newX1 = newX1*Math.cos(zRadians) - newY1*Math.sin(zRadians);
+        newY1 = newX1*Math.sin(zRadians) + newY1*Math.cos(zRadians);
+        newX2 = newX2*Math.cos(zRadians) - newY2*Math.sin(zRadians);
+        newY2 = newX2*Math.sin(zRadians) + newY2*Math.cos(zRadians);
 
-        return new Line(new Point(x1, y1, z1), new Point(x2, y2, z2));
+        return new Line(
+                new Point(newX1, newY1, newZ1),
+                new Point(newX2, newY2, newZ2)
+        );
     }
 
     @Override
