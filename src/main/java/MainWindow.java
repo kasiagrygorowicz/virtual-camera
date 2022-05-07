@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 public class MainWindow extends JFrame implements KeyListener, ActionListener {
@@ -89,7 +90,7 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
             if(isSelected == JFileChooser.APPROVE_OPTION){
                 try{
                     File file = fileChooser.getSelectedFile();
-                    Set<Line> objects = DataReader.load(file.getPath());
+                    List<Line> objects = DataReader.load(file.getPath());
                     camera.setObjects(objects);
                     camera.repaint();
                 } catch (IOException ex) {

@@ -14,15 +14,17 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class DataReader {
 
     private static Logger log = LoggerFactory.getLogger(DataReader.class);
 
-    public static Set load(String path) throws IOException {
-        HashSet<Line> objects = new HashSet<>();
+    public static List load(String path) throws IOException {
+        List<Line> objects = new ArrayList<>();
         JSONArray parser = new JSONArray(Files.readString(Path.of(path), StandardCharsets.UTF_8));
         parser.forEach(lines -> {
             JSONArray line = (JSONArray) lines;
@@ -37,10 +39,7 @@ public class DataReader {
         return objects;
     }
 
-    public static void main(String[] args) throws IOException {
-        Set<Line> e = load("/Users/Kasia/Documents/projects/virtual-camera/program/src/main/resources/json_files/data1.json");
-        System.out.println(e.toString());
-    }
+
 
 
 }
