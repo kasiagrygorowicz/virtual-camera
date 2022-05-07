@@ -115,21 +115,30 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
     public void keyPressed(KeyEvent e) {
        switch(e.getKeyCode()){
 //         move vertically and horizontally
-//           todo move z
-           case KeyEvent.VK_UP -> camera.moveAxisY(CameraConstants.STEP);
-           case KeyEvent.VK_DOWN -> camera.moveAxisY(-CameraConstants.STEP);
-           case KeyEvent.VK_RIGHT -> camera.moveAxisX(CameraConstants.STEP);
-           case KeyEvent.VK_LEFT -> camera.moveAxisX(-CameraConstants.STEP);
+//        == move up ==
+           case KeyEvent.VK_UP -> camera.moveAxisY(-CameraConstants.STEP);
+//         == move down ==
+           case KeyEvent.VK_DOWN -> camera.moveAxisY(CameraConstants.STEP);
+//         == move right ==
+           case KeyEvent.VK_RIGHT -> camera.moveAxisX(-CameraConstants.STEP);
+//         == move left ==
+           case KeyEvent.VK_LEFT -> camera.moveAxisX(+CameraConstants.STEP);
+//         == move forwards ==
+           case KeyEvent.VK_Q -> camera.moveAxisZ(-CameraConstants.STEP);
+//         == move backwards
+           case KeyEvent.VK_W -> camera.moveAxisZ(+CameraConstants.STEP);
+//         == zoom in ==
            case KeyEvent.VK_I -> camera.setZoom(CameraConstants.ZOOM);
+//         == zoom out ==
            case KeyEvent.VK_O -> camera.setZoom(-CameraConstants.ZOOM);
 //         == x rotation - forward ==
            case KeyEvent.VK_F -> camera.rotateAxisX(CameraConstants.TURN);
 //         == x rotation - backwards ==
            case KeyEvent.VK_G -> camera.rotateAxisX(-CameraConstants.TURN);
 //         == y rotation - right ==
-           case KeyEvent.VK_H -> camera.rotateAxisY(CameraConstants.TURN);
+           case KeyEvent.VK_H -> camera.rotateAxisY(-CameraConstants.TURN);
 //         == y rotation - left ==
-           case KeyEvent.VK_J -> camera.rotateAxisY(-CameraConstants.TURN);
+           case KeyEvent.VK_J -> camera.rotateAxisY(CameraConstants.TURN);
 //         == z rotation- down&left ==
            case KeyEvent.VK_K -> camera.rotateAxisZ(CameraConstants.TURN);
 //         == z rotation- down&right ==
