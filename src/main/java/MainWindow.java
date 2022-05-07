@@ -115,7 +115,10 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
     public void keyPressed(KeyEvent e) {
        switch(e.getKeyCode()){
 //         move vertically and horizontally
-//           todo move z
+           //         == move forwards ==
+           case KeyEvent.VK_Q -> camera.moveAxisZ(-CameraConstants.STEP);
+//         == move backwards
+           case KeyEvent.VK_W -> camera.moveAxisZ(+CameraConstants.STEP);
            case KeyEvent.VK_UP -> camera.moveAxisY(CameraConstants.STEP);
            case KeyEvent.VK_DOWN -> camera.moveAxisY(-CameraConstants.STEP);
            case KeyEvent.VK_RIGHT -> camera.moveAxisX(CameraConstants.STEP);
