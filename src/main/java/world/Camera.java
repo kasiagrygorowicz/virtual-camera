@@ -15,8 +15,8 @@ public class Camera extends JPanel {
     private static Logger log = LoggerFactory.getLogger(Camera.class);
 
     //  == camera parameters ==
-    private final int width = 12;
-    private final int height = 12;
+    private final int width = 20;
+    private final int height = 20;
     private double zoom = 5;
 
 
@@ -72,20 +72,19 @@ public class Camera extends JPanel {
         rotationAxisX += v;
         log.debug("Axis x rotation: {}",rotationAxisX);
         for (Line l : objects)
-            TransformationUtility.rotate(l,ROTATION_TYPE.X,rotationAxisX,rotationAxisY,rotationAxisZ);
+            TransformationUtility.rotate(l,ROTATION_TYPE.X,v);
     }
 
     public void rotateAxisY(double v) {
         rotationAxisY += v;
-
         for (Line l : objects)
-            TransformationUtility.rotate(l,ROTATION_TYPE.Y,rotationAxisX,rotationAxisY,rotationAxisZ);
+            TransformationUtility.rotate(l,ROTATION_TYPE.Y,v);
     }
 
     public void rotateAxisZ(double v) {
         rotationAxisZ += v;
         for (Line l : objects)
-            TransformationUtility.rotate(l,ROTATION_TYPE.Z,rotationAxisX,rotationAxisY,rotationAxisZ);
+            TransformationUtility.rotate(l,ROTATION_TYPE.Z,v);
 
     }
 
@@ -111,7 +110,7 @@ public class Camera extends JPanel {
                 xScaled = getSize().width / width;
                 yScaled = getSize().height / height;
 
-                xPositioned = 300;
+                xPositioned = getSize().width/2;
                 yPositioned = getSize().height / 2;
 
 //                log.debug("\tx1: {}\ty1: {}\tx2: {}\ty2: {}", (int) Math.ceil(x1 * xScaled + xPositioned), (int) Math.ceil(y1 * yScaled + yPositioned), (int) Math.ceil(x2 * xScaled + xPositioned), (int) Math.ceil(y2 * yScaled + yPositioned));
