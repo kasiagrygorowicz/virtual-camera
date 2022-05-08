@@ -7,7 +7,6 @@ import world.Line;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -15,16 +14,18 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 public class MainWindow extends JFrame implements KeyListener, ActionListener {
 
-    private static Logger log = LoggerFactory.getLogger(MainWindow.class);
+    private static final Logger log = LoggerFactory.getLogger(MainWindow.class);
     private final Camera camera;
 
-    private JMenuBar menu;
-    private JMenu file, help;
-    private JMenuItem loadData, about, howToUse;
+    private final JMenuBar menu;
+    private final JMenu file;
+    private final JMenu help;
+    private final JMenuItem loadData;
+    private final JMenuItem about;
+    private final JMenuItem howToUse;
 
 
     public MainWindow() {
@@ -85,7 +86,7 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
 
         }else if(e.getSource() == loadData){
             System.out.println("choosing file");
-            JFileChooser fileChooser = new JFileChooser("/Users/Kasia/Documents/projects/virtual-camera/program/src/main/resources/json_files");
+            JFileChooser fileChooser = new JFileChooser( FileSystemView.getFileSystemView().getHomeDirectory());
             int isSelected = fileChooser.showOpenDialog(this);
             if(isSelected == JFileChooser.APPROVE_OPTION){
                 try{
@@ -116,17 +117,17 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
        switch(e.getKeyCode()){
 //         move vertically and horizontally
 //        == move up ==
-           case KeyEvent.VK_UP -> camera.moveAxisY(CameraConstants.STEP);
+           case KeyEvent.VK_UP -> camera.moveAxisY(-CameraConstants.STEP);
 //         == move down ==
-           case KeyEvent.VK_DOWN -> camera.moveAxisY(-CameraConstants.STEP);
+           case KeyEvent.VK_DOWN -> camera.moveAxisY(CameraConstants.STEP);
 //         == move right ==
            case KeyEvent.VK_RIGHT -> camera.moveAxisX(CameraConstants.STEP);
 //         == move left ==
            case KeyEvent.VK_LEFT -> camera.moveAxisX(-CameraConstants.STEP);
 //         == move forwards ==
-           case KeyEvent.VK_Q -> camera.moveAxisZ(CameraConstants.STEP);
+           case KeyEvent.VK_Q -> camera.moveAxisZ(-CameraConstants.STEP);
 //         == move backwards
-           case KeyEvent.VK_W -> camera.moveAxisZ(-CameraConstants.STEP);
+           case KeyEvent.VK_W -> camera.moveAxisZ(CameraConstants.STEP);
 //         == zoom in ==
            case KeyEvent.VK_I -> camera.setZoom(CameraConstants.ZOOM);
 //         == zoom out ==
@@ -136,7 +137,7 @@ public class MainWindow extends JFrame implements KeyListener, ActionListener {
 //         == x rotation - backwards ==
            case KeyEvent.VK_G -> camera.rotateAxisX(CameraConstants.TURN);
 //         == y rotation - right ==
-           case KeyEvent.VK_H -> camera.rotateAxisY(CameraConstants.TURN);
+           case KeyEvent.VK_H-> camera.rotateAxisY(CameraConstants.TURN);
 //         == y rotation - left ==
            case KeyEvent.VK_J -> camera.rotateAxisY(-CameraConstants.TURN);
 //         == z rotation- down&left ==

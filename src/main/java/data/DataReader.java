@@ -1,7 +1,6 @@
 package data;
 
 
-import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,13 +14,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class DataReader {
 
-    private static Logger log = LoggerFactory.getLogger(DataReader.class);
+    private static final Logger log = LoggerFactory.getLogger(DataReader.class);
 
     public static List load(String path) throws IOException {
         List<Line> objects = new ArrayList<>();

@@ -1,11 +1,10 @@
 package world.utils;
 
 import world.Line;
-import world.Point;
 
 public class TransformationUtility {
 
-    public static void rotate(Line line, ROTATION_TYPE type, double rotation) {
+    public static void rotate(Line line, world.utils.ROTATION_TYPE type, double rotation) {
         double x1 = line.getP1().getX();
         double y1 = line.getP1().getY();
         double z1 = line.getP1().getZ();
@@ -16,20 +15,20 @@ public class TransformationUtility {
         double rotationRadians =Math.toRadians(rotation);
 
 
-        if (ROTATION_TYPE.X == type) {
+        if (world.utils.ROTATION_TYPE.X == type) {
             y1 = y1 * Math.cos(rotationRadians) - z1 * Math.sin(rotationRadians);
             z1 = y1 * Math.sin(rotationRadians) + z1 * Math.cos(rotationRadians);
             y2 = y2 * Math.cos(rotationRadians) - z2 * Math.sin(rotationRadians);
             z2 = y2 * Math.sin(rotationRadians) + z2 * Math.cos(rotationRadians);
         }
 //
-        if (ROTATION_TYPE.Y == type) {
+        if (world.utils.ROTATION_TYPE.Y == type) {
             x1 = z1 * Math.sin(rotationRadians) + x1 * Math.cos(rotationRadians);
             z1 = z1 * Math.cos(rotationRadians) - x1 * Math.sin(rotationRadians);
             x2 = z2 * Math.sin(rotationRadians) + x2 * Math.cos(rotationRadians);
             z2 = z2 * Math.cos(rotationRadians) - x2 * Math.sin(rotationRadians);
         }
-        if (ROTATION_TYPE.Z == type) {
+        if (world.utils.ROTATION_TYPE.Z == type) {
             x1 = x1 * Math.cos(rotationRadians) - y1 * Math.sin(rotationRadians);
             y1 = x1 * Math.sin(rotationRadians) + y1 * Math.cos(rotationRadians);
             x2 = x2 * Math.cos(rotationRadians) - y2 * Math.sin(rotationRadians);
